@@ -1,4 +1,5 @@
 <?php
+
 namespace JPB\WP\Dev;
 
 trait Hooks {
@@ -8,7 +9,7 @@ trait Hooks {
 	 *
 	 * @var array
 	 */
-	protected $__filterMap = [ ];
+	protected $__filterMap = [];
 
 	/**
 	 * Add a WordPress filter
@@ -73,6 +74,29 @@ trait Hooks {
 	}
 
 	/**
+	 * Run do_action
+	 *
+	 * @param string $action  The action to run
+	 * @param array  ...$args Any extra arguments to pass to do_action
+	 */
+	protected function doAction( $action, ...$args ) {
+		do_action( $action, ...$args );
+	}
+
+	/**
+	 * Run apply_filters
+	 *
+	 * @param string $filter  The filter to run
+	 * @param string $value   The value to filter
+	 * @param array  ...$args Any extra values to send through the filter
+	 *
+	 * @return mixed|void
+	 */
+	protected function applyFilters( $filter, $value, ...$args ) {
+		return apply_filters( $filter, $value, ...$args );
+	}
+
+	/**
 	 * Get a unique ID for a hook based on the internal method, hook, and priority
 	 *
 	 * @param string $hook
@@ -98,8 +122,8 @@ trait Hooks {
 	 */
 	protected function mapFilter( $id, $method, $argCount ) {
 		if ( empty( $this->__filterMap[ $id ] ) ) {
-			$this->__filterMap[ $id ] = function () use ( $method, $argCount ) {
-				return call_user_func_array( [ $this, $method ], array_slice( func_get_args(), 0, $argCount ) );
+			$this->__filterMap[ $id ] = function ( ...$args ) use ( $method, $argCount ) {
+				return $this->{$method}( ...array_slice( $args, 0, $argCount ) );
 			};
 		}
 

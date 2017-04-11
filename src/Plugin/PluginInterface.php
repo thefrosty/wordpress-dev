@@ -1,6 +1,6 @@
 <?php
 
-namespace JPB\WP\Dev;
+namespace JPB\WP\Dev\Plugin;
 
 interface PluginInterface {
 
@@ -23,7 +23,7 @@ interface PluginInterface {
 	 *
 	 * @param string $directory
 	 *
-	 * @return PluginInterface Returns itself for easier method chaining
+	 * @return $this Returns itself for easier method chaining
 	 */
 	public function setDirectory( $directory );
 
@@ -39,7 +39,7 @@ interface PluginInterface {
 	 *
 	 * @param string $url
 	 *
-	 * @return PluginInterface Returns itself for easier method chaining
+	 * @return $this Returns itself for easier method chaining
 	 */
 	public function setUrl( $url );
 
